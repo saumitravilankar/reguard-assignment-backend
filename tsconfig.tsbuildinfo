@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/seed.ts","./src/controller/customercontroller.ts","./src/controller/dashboardcontroller.ts","./src/routes/customerroutes.ts","./src/routes/dashboardroutes.ts","./src/utils/prismaclient.ts"],"version":"5.7.2"}

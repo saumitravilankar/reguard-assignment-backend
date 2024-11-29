@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PurchaseStatus {
+  Pending
+  Completed
+  Cancelled
+}
+
+enum ContractStatus {
+  Active
+  Inactive
+}
+
+model Customer {
+  id          String     @id @default(uuid())
+  firstName   String
+  lastName    String
+  mainPhone   String
+  mobilePhone String
+  email       String     @unique
+  createdAt   DateTime
+  updatedAt   DateTime
+  deletedAt   DateTime?
+  Purchase    Purchase[]
+  Contract    Contract[]
+}
+
+model Purchase {
+  id              String         @id @default(uuid())
+  status          PurchaseStatus
+  totalSaleAmount String
+  purchaseDate    DateTime
+  vendor          String
+  createdAt       DateTime
+  updatedAt       DateTime
+  deletedAt       DateTime?
+  customer        Customer       @relation(fields: [customerId], references: [id])
+  customerId      String
+  merchantId      String
+  orderNumber     String
+  Contract        Contract[]
+  LineItem        LineItem[]
+}
+
+model Contract {
+  id             String         @id @default(uuid())
+  name           String
+  startDate      DateTime
+  endDate        DateTime
+  createdAt      DateTime
+  updatedAt      DateTime
+  deletedAt      DateTime?
+  customer       Customer       @relation(fields: [customerId], references: [id])
+  customerId     String
+  merchantId     String
+  purchase       Purchase       @relation(fields: [purchaseId], references: [id])
+  purchaseId     String
+  status         ContractStatus
+  contractAmount String
+  activatedAt    DateTime
+}
+
+model LineItem {
+  id           String    @id @default(uuid())
+  invoice      String
+  invoiceDate  DateTime
+  deliveryDate DateTime
+  itemCost     String
+  createdAt    DateTime
+  updatedAt    DateTime
+  deletedAt    DateTime?
+  purchase     Purchase  @relation(fields: [purchaseId], references: [id])
+  purchaseId   String
+}
