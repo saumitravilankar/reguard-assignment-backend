@@ -12,8 +12,8 @@ This project sets up a backend application with PostgreSQL database using Docker
 
 ### 1. Clone the Project
 ```bash
-git clone <your-repository-url>
-cd <project-directory>
+git clone https://github.com/saumitravilankar/reguard-assignment-backend.git
+cd reguard-assignment-backend
 ```
 
 ### 2. Spin Up PostgreSQL Database
